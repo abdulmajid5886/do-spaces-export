@@ -39,6 +39,8 @@ def download_objects(
     try:
         for file in files:
             local_filepath = f"{local_path}/{file['Key']}"
+            # Create parent directories if they don't exist
+            os.makedirs(os.path.dirname(local_filepath), exist_ok=True)
             with open(local_filepath, "wb") as f:
                 client.download_fileobj(bucket_name, file["Key"], f)
                 LOGGER.success(
